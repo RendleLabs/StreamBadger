@@ -1,0 +1,21 @@
+﻿@inject ServerClient ServerClient;
+
+<div class="card mb-3 col-2">
+  <h5 class="class-header text-center">@ImageName</h5>
+  <button class="btn btn-link" @onclick="() => ImageClick()">
+  <img src="http://localhost:25293/images/@ImageName"
+       class="d-block user-select-none"
+       style="width: 100%; max-height: 200px"/>
+  </button>
+</div>
+
+@code {
+
+  [Parameter]
+  public string ImageName { get; set; }
+  
+  private async Task ImageClick()
+  {
+    await ServerClient.ShowImage(ImageName);
+  }
+}

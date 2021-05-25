@@ -1,0 +1,33 @@
+﻿@using StreamBadger.Services
+@inject TwitchAuth TwitchAuth;
+
+<div>
+  @if (UserName is {Length: >0})
+  {
+    <span>@UserName</span>
+  }
+  else
+  {
+    <a href="/Login" class="btn btn-dark">Connect with Twitch</a>
+  }
+</div>
+
+@code {
+
+    public string UserName { get; set; }
+
+    protected override void OnInitialized()
+    {
+        TwitchAuth.Authenticated += OnAuthenticated;
+    }
+
+    private void OnAuthenticated()
+    {
+        if (TwitchAuth.SessionData?.Name is {Length: >0})
+        {
+            UserName = TwitchAuth.SessionData.Name;
+            StateHasChanged();
+        }
+    }
+
+}

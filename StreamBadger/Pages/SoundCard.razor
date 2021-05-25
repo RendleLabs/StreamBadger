@@ -1,0 +1,20 @@
+﻿@inject ServerClient ServerClient;
+
+<div class="card mb-3 col-2">
+  <h5 class="class-header text-center">@Name</h5>
+  <button class="btn btn-primary" @onclick="Click">
+    Play
+  </button>
+</div>
+
+@code {
+
+  [Parameter]
+  public string Name { get; set; }
+  
+  private async Task Click()
+  {
+    await ServerClient.PlaySound(Name);
+  }
+  
+}

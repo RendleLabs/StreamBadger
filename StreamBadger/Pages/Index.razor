@@ -1,0 +1,58 @@
+@page "/"
+
+<h1>Hello</h1>
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link h4 @_imagesTabClass" href="#images" @onclick="_ => ShowImages()">
+      Images
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link h4 @_soundsTabClass" href="#sounds" @onclick="_ => ShowSounds()">
+      Sounds
+    </a>
+  </li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane fade @_imagesClass" id="images">
+    <ImageList/>
+  </div>
+  <div class="tab-pane fade @_soundsClass" id="sounds">
+    <SoundList/>
+  </div>
+</div>
+
+@code {
+
+  private string _imagesTabClass = "active";
+  private string _imagesClass = "show active";
+  private string _soundsTabClass = "";
+  private string _soundsClass = "";
+
+  private void ShowImages()
+  {
+    if (_imagesClass != "show active")
+    {
+      _imagesTabClass = "active";
+      _imagesClass = "show active";
+      _soundsTabClass = "";
+      _soundsClass = "";
+      StateHasChanged();
+    }
+  }
+
+  private void ShowSounds()
+  {
+    if (_soundsClass != "show active")
+    {
+      _soundsTabClass = "active";
+      _soundsClass = "show active";
+      _imagesClass = "";
+      _imagesTabClass = "";
+      StateHasChanged();
+    }
+  }
+
+
+}

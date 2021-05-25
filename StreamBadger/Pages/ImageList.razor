@@ -1,0 +1,30 @@
+﻿@inject ImageStore ImageStore;
+
+<div class="row">
+  <div class="col-2">
+    <a class="btn btn-primary btn-block my-1" href="/AddImage">
+      Add image
+    </a>
+  </div>
+</div>
+<div class="row">
+  @foreach (var imageName in _names)
+  {
+    <ImageCard ImageName="@imageName"/>
+  }
+</div>
+
+@code {
+
+  string[] _names = Array.Empty<string>();
+
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (firstRender)
+    {
+      _names = ImageStore.GetImageNames().ToArray();
+      await InvokeAsync(StateHasChanged);
+    }
+  }
+
+}

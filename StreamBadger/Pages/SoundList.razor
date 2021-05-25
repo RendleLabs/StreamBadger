@@ -1,0 +1,23 @@
+﻿@inject SoundStore SoundStore
+
+<div class="row">
+  @foreach (var name in _names)
+  {
+    <SoundCard Name="@name"/>
+  }
+</div>
+
+@code {
+  
+  string[] _names = Array.Empty<string>();
+
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (firstRender)
+    {
+      _names = SoundStore.GetSoundNames().ToArray();
+      await InvokeAsync(StateHasChanged);
+    }
+  }
+
+}
