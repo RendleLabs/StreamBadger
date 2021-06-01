@@ -1,0 +1,45 @@
+﻿@using StreamBadgerOverlay.Services
+@inject ControlBus _controlBus
+
+@foreach (var image in _images)
+{
+    <OverlayImage Name="@image" Ended="@OnImageEnded"></OverlayImage>
+}
+
+@code {
+
+    HashSet<string> _images = new(StringComparer.OrdinalIgnoreCase);
+
+
+    protected override Task OnInitializedAsync()
+    {
+        _controlBus.ToggleImage += ToggleImage;
+        _controlBus.ClearAll += ClearAll;
+        return Task.CompletedTask;
+    }
+
+    private async Task ClearAll()
+    {
+        _images.Clear();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task ToggleImage(ToggleImage toggle)
+    {
+        if (_images.Contains(toggle.Name))
+        {
+            _images.Remove(toggle.Name);
+        }
+        else
+        {
+            _images.Add(toggle.Name);
+        }
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public async Task OnImageEnded(string name)
+    {
+        _images.Remove(name);
+        await InvokeAsync(StateHasChanged);
+    }
+}

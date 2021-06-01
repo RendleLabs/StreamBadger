@@ -1,0 +1,34 @@
+﻿@using StreamBadger.Shared
+@inject ImageStore ImageStore
+
+@if (Image is not null)
+{
+	<img src="/images/@Image.Name.TrimStart('/')" style="@Image.Style" class="ob-image" />
+}
+
+@if (Image?.Sound is {Length: >0})
+{
+    <OverlaySound Name="@Image.Sound" Ended="@OnSoundEnded"></OverlaySound>
+}
+
+@code {
+
+    [Parameter]
+    public string Name { get; set; }
+
+    [Parameter]
+    public EventCallback<string> Ended { get; set; }
+
+    public ImageModel Image { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+      Image = await ImageStore.GetImage(Name);
+    }
+
+    private async Task OnSoundEnded(string _)
+    {
+        await Ended.InvokeAsync(Image.Name);
+    }
+
+}

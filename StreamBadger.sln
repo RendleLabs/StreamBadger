@@ -11,7 +11,7 @@ Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "StreamBadger.WinUI3 (Packag
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamBadgerOverlay", "StreamBadgerOverlay\StreamBadgerOverlay.csproj", "{34BBD175-5558-4BF6-AD3F-8C4265DD84E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamBadger.Shared", "StreamBadger.Shared\StreamBadger.Shared.csproj", "{B2BF50B7-EC93-469E-ABE0-1942D0876462}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamBadger.Shared", "StreamBadger.Shared\StreamBadger.Shared.csproj", "{B2BF50B7-EC93-469E-ABE0-1942D0876462}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

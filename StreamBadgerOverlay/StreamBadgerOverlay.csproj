@@ -6,14 +6,26 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\css\bootstrap\bootstrap.min.css" />
+    <Content Remove="wwwroot\css\site.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\StreamBadger\Services\TwitchBot.cs" Link="Services\TwitchBot.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\css\bootstrap\bootstrap.min.css" />
+    <EmbeddedResource Include="wwwroot\css\site.css" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\StreamBadger.Shared\StreamBadger.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="TwitchLib.Api" Version="3.2.4-preview-d093e175264edce7ccb64c37f7a334f375be79f3" />
+    <PackageReference Include="TwitchLib.Client" Version="3.2.3-preview-94b33cd801bf51e1d81b179ce10c7d896072b4c3" />
+    <PackageReference Include="TwitchLib.PubSub" Version="3.2.3-preview-b9bdd61952511de0bcc4fac5fc7cd7dac9be1c0c" />
   </ItemGroup>
 
 </Project>

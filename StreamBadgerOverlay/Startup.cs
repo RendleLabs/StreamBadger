@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,8 @@ using Microsoft.Extensions.Hosting;
 using StreamBadger.Endpoints;
 using StreamBadger.Shared;
 using StreamBadgerOverlay.Data;
+using StreamBadgerOverlay.Endpoints;
+using StreamBadgerOverlay.Services;
 
 namespace StreamBadgerOverlay
 {
@@ -29,11 +32,12 @@ namespace StreamBadgerOverlay
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<ControlBus>();
             services.AddSingleton<ImageStore>();
             services.AddSingleton<SoundStore>();
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+            services.AddHostedService<TwitchBot>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,11 +52,7 @@ namespace StreamBadgerOverlay
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
             }
-
-            app.UseHttpsRedirection();
 
             app.UseStaticFiles();
 
@@ -61,20 +61,29 @@ namespace StreamBadgerOverlay
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapBlazorHub();
-                endpoints.MapGet("/css/bootstrap/bootstrap.min.css", async context =>
-                {
-                    var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("StreamBadgerOverlay.wwwroot.css.bootstrap.bootstrap.min.css");
-                    if (resource is not null)
-                    {
-                        context.Response.StatusCode = 200;
-                        await resource.CopyToAsync(context.Response.Body);
-                    }
-                });
+                endpoints.MapGet("/css/bootstrap/bootstrap.min.css",
+                    context => ServeCss(context, "bootstrap.bootstrap.min.css"));
+                endpoints.MapGet("/css/site.css",
+                    context => ServeCss(context, "site.css"));
                 endpoints.MapGet("/images/{name}", ImageEndpoint.Get);
                 endpoints.MapGet("/sounds/{name}", SoundEndpoint.Get);
+                endpoints.MapGet("/show/{image}", ShowEndpoint.Show);
+                endpoints.MapGet("/play/{sound}", PlayEndpoint.Play);
+                endpoints.MapGet("/clear", ClearEndpoint.Clear);
 
                 endpoints.MapFallbackToPage("/_Host");
             });
+        }
+
+        private static async Task ServeCss(HttpContext context, string fileName)
+        {
+            var resource = Assembly.GetExecutingAssembly()
+                .GetManifestResourceStream($"StreamBadgerOverlay.wwwroot.css.{fileName}");
+            if (resource is not null)
+            {
+                context.Response.StatusCode = 200;
+                await resource.CopyToAsync(context.Response.Body);
+            }
         }
     }
 }

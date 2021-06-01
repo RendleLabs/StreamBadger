@@ -1,0 +1,37 @@
+﻿@using StreamBadgerOverlay.Services
+@inject ControlBus _controlBus
+
+@foreach (var sound in _sounds)
+{
+    <OverlaySound Name="@sound" Ended="@OnSoundEnded"></OverlaySound>
+}
+
+@code {
+
+    HashSet<string> _sounds = new(StringComparer.OrdinalIgnoreCase);
+
+    protected override Task OnInitializedAsync()
+    {
+        _controlBus.PlaySound += PlaySound;
+        _controlBus.ClearAll += ClearAll;
+        return Task.CompletedTask;
+    }
+
+    private async Task ClearAll()
+    {
+        _sounds.Clear();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task PlaySound(PlaySound play)
+    {
+        _sounds.Add(play.Name);
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public async Task OnSoundEnded(string name)
+    {
+        _sounds.Remove(name);
+        await InvokeAsync(StateHasChanged);
+    }
+}

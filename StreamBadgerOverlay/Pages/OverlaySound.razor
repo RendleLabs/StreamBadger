@@ -1,0 +1,38 @@
+﻿@using StreamBadger.Shared
+@inject SoundStore SoundStore
+@inject IJSRuntime JS
+
+@if (Sound is not null)
+{
+    <audio id="@Sound.Name" src="/sounds/@Sound.Name.TrimStart('/')"></audio>
+}
+
+@code {
+
+    [Parameter]
+    public string Name { get; set; }
+
+    [Parameter]
+    public EventCallback<string> Ended { get; set; }
+
+    public SoundModel Sound { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Sound = await SoundStore.GetSound(Name);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (Sound is null) return;
+        var dotnetHelper = DotNetObjectReference.Create(this);
+        await JS.InvokeVoidAsync("playSound", Sound.Name, dotnetHelper);
+    }
+
+    [JSInvokable]
+    public async void OnSoundEnded(string id)
+    {
+		await Ended.InvokeAsync(Sound.Name);
+    }
+
+}

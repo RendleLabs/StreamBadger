@@ -26,7 +26,6 @@ namespace StreamBadger
             services.AddSingleton<ImageStore>();
             services.AddSingleton<SoundStore>();
             services.AddSingleton<TwitchAuth>();
-            //services.AddHostedService<TwitchBot>();
             
             services.AddHttpClient<ServerClient>(client =>
             {
@@ -55,11 +54,11 @@ namespace StreamBadger
                 .ConfigureLifecycleEvents(builder => {
                     builder.AddWindows(lifeCycleBuilder =>
                     {
-                        lifeCycleBuilder.OnLaunched((windows, args) =>
+                        lifeCycleBuilder.OnLaunched((_, _) =>
                         {
                             StartOverlay();
                         });
-                        lifeCycleBuilder.OnClosed((windows, args) =>
+                        lifeCycleBuilder.OnClosed((_, _) =>
                         {
                             StopOverlay();
                         });
@@ -81,6 +80,14 @@ namespace StreamBadger
         private void StopOverlay()
         {
             StreamBadgerOverlay.Stopdown.Stop();
+            try
+            {
+                _overlay?.Dispose();
+            }
+            catch
+            {
+                // Ignore
+            }
         }
 
         private IHost _overlay;

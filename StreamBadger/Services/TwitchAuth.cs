@@ -1,5 +1,6 @@
 ﻿using StreamBadger.Models;
 using System;
+using StreamBadgerOverlay.Services;
 
 namespace StreamBadger.Services
 {
@@ -11,6 +12,7 @@ namespace StreamBadger.Services
             if (sessionData.AccessToken is { Length: > 0 })
             {
                 Authenticated?.Invoke();
+                TwitchAuthStatic.SetValues(sessionData.AccessToken, sessionData.Id, sessionData.Name);
             }
         }
 
