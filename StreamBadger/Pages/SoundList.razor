@@ -1,6 +1,13 @@
 ﻿@inject SoundStore SoundStore
 
 <div class="row">
+  <div class="col-2">
+    <a class="btn btn-primary btn-block my-1" href="/AddSound">
+      Add sound
+    </a>
+  </div>
+</div>
+<div class="row">
   @foreach (var name in _names)
   {
     <SoundCard Name="@name"/>

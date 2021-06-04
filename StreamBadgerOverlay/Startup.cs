@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using StreamBadger;
 using StreamBadger.Endpoints;
 using StreamBadger.Shared;
 using StreamBadgerOverlay.Data;
@@ -35,6 +36,7 @@ namespace StreamBadgerOverlay
             services.AddSingleton<ControlBus>();
             services.AddSingleton<ImageStore>();
             services.AddSingleton<SoundStore>();
+            services.AddSingleton<SoundTemp>();
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddHostedService<TwitchBot>();
@@ -69,6 +71,7 @@ namespace StreamBadgerOverlay
                 endpoints.MapGet("/sounds/{name}", SoundEndpoint.Get);
                 endpoints.MapGet("/show/{image}", ShowEndpoint.Show);
                 endpoints.MapGet("/play/{sound}", PlayEndpoint.Play);
+                endpoints.MapGet("/temp/sounds/{sound}", TempSounds.Play);
                 endpoints.MapGet("/clear", ClearEndpoint.Clear);
 
                 endpoints.MapFallbackToPage("/_Host");

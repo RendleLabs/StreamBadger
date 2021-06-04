@@ -26,7 +26,7 @@
     {
         if (Sound is null) return;
         var dotnetHelper = DotNetObjectReference.Create(this);
-        await JS.InvokeVoidAsync("playSound", Sound.Name, dotnetHelper);
+        await JS.InvokeVoidAsync("playSound", Sound.Name, Sound.Volume, dotnetHelper);
     }
 
     [JSInvokable]

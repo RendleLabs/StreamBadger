@@ -26,6 +26,7 @@ namespace StreamBadger
             services.AddSingleton<ImageStore>();
             services.AddSingleton<SoundStore>();
             services.AddSingleton<TwitchAuth>();
+            services.AddSingleton<SoundTemp>();
             
             services.AddHttpClient<ServerClient>(client =>
             {

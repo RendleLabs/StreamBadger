@@ -19,6 +19,14 @@
         <a class="dismiss">🗙</a>
     </div>
 
+    <script>
+        window.playSound = function (id, volume) {
+            const element = document.getElementById(id);
+            element.volume = volume;
+            element.play();
+        };
+    </script>
+
     <script src="_framework/blazor.webview.js" autostart="false"></script>
 
 </body>

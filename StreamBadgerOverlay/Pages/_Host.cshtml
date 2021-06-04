@@ -30,8 +30,9 @@
         <a class="dismiss">🗙</a>
     </div>
 <script>
-    window.playSound = function (id, dotnetHelper) {
+    window.playSound = function (id, volume, dotnetHelper) {
         const element = document.getElementById(id);
+        element.volume = volume;
         element.addEventListener('ended', function () {
             dotnetHelper.invokeMethodAsync('OnSoundEnded', id);
         });

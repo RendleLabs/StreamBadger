@@ -19,25 +19,17 @@ namespace StreamBadger.Shared
             _baseDirectory = Path.Combine(appData, "StreamBadger", "Sounds");
         }
         
-        public async Task AddAsync(Stream stream, string contentType, UploadSoundModel model)
+        public async Task AddAsync(string tempFile, UploadSoundModel model)
         {
+            tempFile = Path.Combine(Path.GetTempPath(), tempFile);
             var directory = Path.Combine(_baseDirectory, model.Name);
             Directory.CreateDirectory(directory);
+
+            var extension = Path.GetExtension(tempFile);
+
+            var targetFile = Path.Combine(directory, $"sound{extension}");
+            File.Copy(tempFile, targetFile, true);
             
-            var fileName = contentType.ToLower() switch
-            {
-                "audio/mpeg" => "sound.mp3",
-                _ => null,
-            };
-
-            if (fileName is null) return;
-
-            var filePath = Path.Combine(directory, fileName);
-            await using (var file = File.Create(filePath))
-            {
-                await stream.CopyToAsync(file);
-            }
-
             var infoPath = Path.Combine(directory, "info.json");
             await using (var infoFile = File.Create(infoPath))
             {
@@ -85,12 +77,12 @@ namespace StreamBadger.Shared
             var soundFile = Directory.EnumerateFiles(directory, "sound.*").FirstOrDefault();
             if (soundFile == null) return null;
 
-            UploadImageModel? model;
+            UploadSoundModel? model;
             try
             {
                 await using (var info = File.OpenRead(infoFile))
                 {
-                    model = await JsonSerializer.DeserializeAsync<UploadImageModel>(info);
+                    model = await JsonSerializer.DeserializeAsync<UploadSoundModel>(info);
                 }
             }
             catch
@@ -100,7 +92,7 @@ namespace StreamBadger.Shared
 
             if (model is null) return null;
 
-            var soundModel = new SoundModel(name, soundFile, model.Css);
+            var soundModel = new SoundModel(name, soundFile, model.Volume);
             _cache.TryAdd(name, soundModel);
             return soundModel;
         }
