@@ -14,12 +14,23 @@
         </div>
         <div class="mb-3">
           <label for="name" class="form-label">Name:</label>
-          <InputText id="name" class="form-control" @bind-Value="_uploadImageModel.Name"></InputText>
+          <InputText id="name" class="form-control" @bind-Value="_uploadImageModel.Name" required></InputText>
         </div>
-        <div class="mb-3">
-          <label for="imageStyle" class="form-label">CSS</label>
-          <InputTextArea id="imageStyle" class="form-control" @bind-Value="_imageStyle" placeholder="CSS"/>
-        </div>
+		<div class="mb-3">
+            <ButtonSwitch ValueA="width" LabelA="Width"
+                          ValueB="height" LabelB="Height" @bind-Value="WidthHeight" />
+			<input type="range" @bind-value="Size" class="form-range" min="0" max="100" step="1" id="width">
+		</div>
+		<div class="mb-3">
+            <ButtonSwitch ValueA="left" LabelA="Left"
+                          ValueB="right" LabelB="Right" @bind-Value="LeftRight" />
+			<input type="range" @bind-value="HPos" class="form-range" min="0" max="100" step="1" id="left">
+		</div>
+		<div class="mb-3">
+            <ButtonSwitch ValueA="top" LabelA="Top"
+                          ValueB="bottom" LabelB="Bottom" @bind-Value="TopBottom" />
+			<input type="range" @bind-value="VPos" class="form-range" min="0" max="100" step="1" id="left">
+		</div>
         <div class="mb-3">
           <label class="form-label">Sound:</label>
           <InputText id="sound" class="form-control" @bind-Value="_uploadImageModel.Sound"></InputText>
@@ -45,6 +56,79 @@
   private ElementReference _image;
   private string _imageSrc;
   private string _imageStyle = "width: 50%;";
+
+    private string _widthHeight = "width";
+    private string _leftRight = "left";
+    private string _topBottom = "top";
+
+    private float _size = 50f;
+    private float _hPos = 0f;
+    private float _vPos = 0f;
+
+    public string WidthHeight
+    {
+        get => _widthHeight;
+        set
+        {
+            _widthHeight = value;
+            SetImageStyle();
+        }
+    }
+
+    public string LeftRight
+    {
+        get => _leftRight;
+        set
+        {
+            _leftRight = value;
+            SetImageStyle();
+        }
+    }
+
+    public string TopBottom
+    {
+        get => _topBottom;
+        set
+        {
+            _topBottom = value;
+            SetImageStyle();
+        }
+    }
+
+    public float Size
+    {
+        get => _size;
+        set
+        {
+            _size = value;
+            SetImageStyle();
+        }
+    }
+
+    public float HPos
+    {
+        get => _hPos;
+        set
+        {
+            _hPos = value;
+            SetImageStyle();
+        }
+    }
+
+    public float VPos
+    {
+        get => _vPos;
+        set
+        {
+            _vPos = value;
+            SetImageStyle();
+        }
+    }
+
+    private void SetImageStyle()
+    {
+        _imageStyle = $"{_widthHeight}: {_size}%; {_leftRight}: {_hPos}%; {_topBottom}: {_vPos}%;";
+    }
 
   private async Task ImageUploadSubmit()
   {

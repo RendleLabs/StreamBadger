@@ -1,0 +1,72 @@
+﻿@inherits InputBase<string>
+@using System.Globalization
+
+<div class="btn-group btn-group-toggle">
+	<label class="btn btn-sm btn-secondary @_aSelected">
+		<input type="radio" value="@ValueA" checked="@(ValueA.Equals(CurrentValue))" @onchange="OnChanged" />
+		@LabelA
+	</label>
+	<label class="btn btn-sm btn-secondary @_bSelected">
+		<input type="radio" value="@ValueB" checked="@(ValueB.Equals(CurrentValue))" @onchange="OnChanged" />
+		@LabelB
+	</label>
+</div>
+
+@code {
+
+	[Parameter]
+	public string ValueA { get; set; }
+
+	[Parameter]
+	public string LabelA { get; set; }
+
+    [Parameter]
+	public string ValueB { get; set; }
+
+	[Parameter]
+	public string LabelB { get; set; }
+
+    private void OnChanged(ChangeEventArgs args)
+    {
+        if (args.Value is string value)
+        {
+            SelectedValue = value;
+        }
+        CurrentValue = CurrentValueAsString = args.Value?.ToString();
+    }
+
+    private string _selectedValue;
+    private string _aSelected;
+    private string _bSelected;
+
+	[Parameter]
+    public string SelectedValue
+    {
+        get => _selectedValue;
+        set
+        {
+            if (_selectedValue != value)
+            {
+                _selectedValue = value;
+                if (_selectedValue == ValueA)
+                {
+                    _aSelected = "active";
+                    _bSelected = "";
+                }
+                else
+                {
+                    _aSelected = "";
+                    _bSelected = "active";
+                }
+            }
+        }
+    }
+
+    protected override bool TryParseValueFromString(string? value, out string result, out string? validationErrorMessage)
+    {
+        result = value;
+        validationErrorMessage = null;
+        return true;
+    }
+
+}
