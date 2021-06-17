@@ -1,16 +1,18 @@
 ﻿@page "/AddImage"
 @using System.IO
+@using System.Text
 @using Microsoft.AspNetCore.Components
 @using StreamBadger.Models
 @using StreamBadger.Services
 @inject ImageStore ImageStore
+@inject SoundStore SoundStore
 
 <div class="container-fluid">
   <div class="row">
     <div class="col-4">
       <EditForm Model="@_uploadImageModel" OnValidSubmit="ImageUploadSubmit" class="form">
         <div class="mb-3">
-          <InputFile OnChange="@OnInputFileChange" class="form-control-file"/>
+          <InputFile OnChange="@OnInputFileChange" class="form-control-file" required/>
         </div>
         <div class="mb-3">
           <label for="name" class="form-label">Name:</label>
@@ -32,13 +34,21 @@
 			<input type="range" @bind-value="VPos" class="form-range" min="0" max="100" step="1" id="left">
 		</div>
         <div class="mb-3">
-          <label class="form-label">Sound:</label>
-          <InputText id="sound" class="form-control" @bind-Value="_uploadImageModel.Sound"></InputText>
+          <label for="sound" class="form-label">Sound:</label>
+		  <InputText id="sound" class="form-control" @bind-Value="_uploadImageModel.Sound" />
+		  @* <InputSelect id="sound" class="form-control form-select" @bind-Value="_uploadImageModel.Sound"> *@
+    @*         <option value="" selected>(None)</option> *@
+    @*         @foreach (var sound in Sounds) *@
+    @*         { *@
+    @*             <option value="@sound">@sound</option> *@
+    @*         } *@
+    @*       </InputSelect> *@
         </div>
         <div>
           <button type="submit" class="btn btn-success">Submit</button>
         </div>
       </EditForm>
+        <a href="https://getbootstrap.com/docs/4.3/components/forms/">Bootstrap</a>
     </div>
     <div class="col-8">
       <div class="image-preview-container">
@@ -64,6 +74,8 @@
     private float _size = 50f;
     private float _hPos = 0f;
     private float _vPos = 0f;
+
+    public string[] Sounds { get; set; } = Array.Empty<string>();
 
     public string WidthHeight
     {
@@ -125,14 +137,35 @@
         }
     }
 
+    protected override void OnInitialized()
+    {
+        Sounds = SoundStore.GetSoundNames().ToArray();
+    }
+
     private void SetImageStyle()
     {
         _imageStyle = $"{_widthHeight}: {_size}%; {_leftRight}: {_hPos}%; {_topBottom}: {_vPos}%;";
     }
 
+    private string GetImageCss()
+    {
+        var builder = new StringBuilder();
+        if (_widthHeight == "width")
+        {
+            builder.Append($"width: {_size}vw;");
+        }
+        else
+        {
+            builder.Append($"height: {_size}vh;");
+        }
+        builder.Append($"{_leftRight}:{_hPos}vw;");
+        builder.Append($"{_topBottom}:{_vPos}vh;");
+        return builder.ToString();
+    }
+
   private async Task ImageUploadSubmit()
   {
-    _uploadImageModel.Css = _imageStyle;
+    _uploadImageModel.Css = GetImageCss();
     await ImageStore.AddAsync(_file.OpenReadStream(MaxUploadSize), _file.ContentType, _uploadImageModel);
   }
 
