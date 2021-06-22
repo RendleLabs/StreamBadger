@@ -1,6 +1,8 @@
 ﻿@page "/Settings"
 @using Microsoft.AspNetCore.Components
 @using StreamBadger.Models
+@inject SettingsStore SettingsStore
+@inject NavigationManager NavigationManager
 
 <div class="container">
     <div class="row">
@@ -8,7 +10,16 @@
 			<EditForm Model="@Model" class="form" OnValidSubmit="OnSubmit">
                 <div class="mb-3">
                     <label for="port" class="form-label">Server Port:</label>
-                    <InputText @bind-Value="Model.Port" type="number" class="form-control"/>
+                    <InputNumber @bind-Value="Model.Port" class="form-control"/>
+                </div>
+                <h2>OBS WebSockets</h2>
+                <div class="mb-3">
+                    <label for="obs-port" class="form-label">OBS Port:</label>
+                    <InputNumber @bind-Value="Model.ObsWebSocketsPort" class="form-control"/>
+                </div>
+                <div class="mb-3">
+                    <label for="obs-port" class="form-label">OBS Password:</label>
+                    <InputText @bind-Value="Model.ObsWebSocketsPassword" type="password" class="form-control"/>
                 </div>
                 <div>
                     <button type="submit" class="btn btn-outline-success">Save</button>
@@ -25,10 +36,17 @@
 
     protected override async Task OnInitializedAsync()
     {
+        Model = await SettingsStore.LoadAsync();
     }
 
-    private void OnSubmit()
+    private async Task OnSubmit()
     {
+        await SettingsStore.SaveAsync(Model);
+        NavigationManager.NavigateTo("/");
     }
 
+    private void OnCancel()
+    {
+        NavigationManager.NavigateTo("/");
+    }
 }

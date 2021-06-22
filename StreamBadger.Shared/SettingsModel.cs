@@ -2,8 +2,8 @@
 {
     public class SettingsModel
     {
-        public string Port { get; set; } = "25293";
-        public string ObsWebSocketsPort { get; set; }
-        public string ObsWebSocketsPassword { get; set; }
+        public int Port { get; set; } = 25293;
+        public int ObsWebSocketsPort { get; set; } = 4444;
+        public string? ObsWebSocketsPassword { get; set; }
     }
 }

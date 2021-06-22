@@ -8,6 +8,7 @@ a, .btn-link {
     color: #0366d6;
 }
 
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
@@ -206,4 +207,8 @@ app {
 
 .image-preview {
     position: absolute;
+}
+
+div.page {
+    width: 100vw;
 }

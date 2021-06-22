@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OBSWebsocketDotNet;
 using StreamBadger;
 using StreamBadger.Endpoints;
 using StreamBadger.Shared;
@@ -37,9 +38,11 @@ namespace StreamBadgerOverlay
             services.AddSingleton<ImageStore>();
             services.AddSingleton<SoundStore>();
             services.AddSingleton<SoundTemp>();
+            services.AddSingleton<SettingsStore>();
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddHostedService<TwitchBot>();
+            services.AddHostedService<ObsWebSocketService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
