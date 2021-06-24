@@ -32,5 +32,17 @@ namespace StreamBadger.Clients
 
             return null;
         }
+
+        public async Task<SessionData?> TryGetAsync(string sessionId, CancellationToken token)
+        {
+            var response = await _client.GetAsync($"/ping/{sessionId}", token);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadFromJsonAsync<SessionData>(cancellationToken: token);
+                return data;
+            }
+
+            return null;
+        }
     }
 }

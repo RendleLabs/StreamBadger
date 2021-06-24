@@ -48,8 +48,13 @@
 		<AndroidEnvironment Include="Android\AndroidEnvironment.txt" />
 	</ItemGroup>
 	<ItemGroup>
+	  <ProjectReference Include="..\StreamBadger.Components\StreamBadger.Components.csproj" />
 	  <ProjectReference Include="..\StreamBadger.Shared\StreamBadger.Shared.csproj" />
 	  <ProjectReference Include="..\StreamBadgerOverlay\StreamBadgerOverlay.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Models\" />
+	  <Folder Include="Services\" />
 	</ItemGroup>
 
 </Project>

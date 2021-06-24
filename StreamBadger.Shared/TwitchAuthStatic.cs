@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StreamBadgerOverlay.Services
+namespace StreamBadger.Shared
 {
     public static class TwitchAuthStatic
     {

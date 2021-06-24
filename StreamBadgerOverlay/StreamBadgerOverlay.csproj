@@ -10,10 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\StreamBadger\Services\TwitchBot.cs" Link="Services\TwitchBot.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="wwwroot\css\bootstrap\bootstrap.min.css" />
     <EmbeddedResource Include="wwwroot\css\site.css" />
   </ItemGroup>

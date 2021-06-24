@@ -1,8 +1,5 @@
 ﻿@page "/Login"
 @using System.Diagnostics
-@using System.Threading
-@using StreamBadger.Services
-@using StreamBadger.Clients
 @inject LoginClient LoginClient
 @inject TwitchAuth TwitchAuth;
 @inject NavigationManager NavigationManager;
@@ -29,7 +26,7 @@
       var sessionData = await LoginClient.PingAsync(_sessionId, CancellationToken.None);
       if (sessionData.AccessToken is {Length: >0})
       {
-        TwitchAuth.SetSessionData(sessionData);
+        TwitchAuth.SetSessionData(_sessionId, sessionData);
         NavigationManager.NavigateTo("/");
       }
     }

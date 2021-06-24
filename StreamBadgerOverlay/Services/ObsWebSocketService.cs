@@ -31,9 +31,11 @@ namespace StreamBadgerOverlay.Services
         private async Task ToggleOBSSource(bool toggle)
         {
             var settings = await _settingsStore.LoadAsync();
+            var browserSourceName = settings.ObsBrowserSourceName;
+
+            if (string.IsNullOrEmpty(browserSourceName)) return;
 
             OBSWebsocket obsWebsocket = new OBSWebsocket();
-            var browserSourceName = "StreamBadger";
             var obsWebSocketUrl = $"ws://localhost:{settings.ObsWebSocketsPort}";
             var obsWebSocketPassword = settings.ObsWebSocketsPassword;
 

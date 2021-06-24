@@ -6,7 +6,6 @@ using Microsoft.Maui.Hosting;
 using Microsoft.Maui.Controls.Hosting;
 using StreamBadger.Data;
 using StreamBadger.Shared;
-using StreamBadger.Services;
 using StreamBadger.Clients;
 using Microsoft.Maui.LifecycleEvents;
 using Microsoft.Extensions.Hosting;
@@ -60,7 +59,7 @@ namespace StreamBadger
             services.AddSingleton<SettingsStore>();
 
 #if (WINDOWS)
-            services.AddHttpClient<ServerClient>(client =>
+            services.AddHttpClient<IServerClient, ServerClient>(client =>
             {
                 client.BaseAddress = new Uri("http://localhost:25293");
             });

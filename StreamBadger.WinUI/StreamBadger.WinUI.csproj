@@ -35,6 +35,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <RazorComponent Remove="..\StreamBadger\Shared\SurveyPrompt.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="6.0.100-preview.5.794" />
 		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.0-preview.5.*" />
 		<PackageReference Include="Microsoft.Maui" Version="6.0.100-preview.5.794" />
@@ -44,6 +48,7 @@
 		<PackageReference Include="Microsoft.ProjectReunion" Version="0.8.0-preview" />
 		<PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.8.0-preview" />
 		<PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.8.0-preview" />
+		<ProjectReference Include="..\StreamBadger.Components\StreamBadger.Components.csproj" />
 		<ProjectReference Include="..\StreamBadger.Shared\StreamBadger.Shared.csproj" />
 		<ProjectReference Include="..\StreamBadgerOverlay\StreamBadgerOverlay.csproj" />
 		<FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" RuntimeFrameworkVersion="10.0.19041.16" />

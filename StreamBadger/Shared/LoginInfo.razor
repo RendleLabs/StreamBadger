@@ -1,5 +1,4 @@
-﻿@using StreamBadger.Services
-@inject TwitchAuth TwitchAuth;
+﻿@inject TwitchAuth TwitchAuth;
 
 <div>
   @if (UserName is {Length: >0})
@@ -16,9 +15,17 @@
 
     public string UserName { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        TwitchAuth.Authenticated += OnAuthenticated;
+        var sessionData = await TwitchAuth.TryGetSessionData();
+        if (sessionData is not null)
+        {
+            UserName = sessionData.Name;
+        }
+        else
+        {
+            TwitchAuth.Authenticated += OnAuthenticated;
+        }
     }
 
     private void OnAuthenticated()

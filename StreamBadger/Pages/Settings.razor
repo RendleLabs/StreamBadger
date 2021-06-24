@@ -1,6 +1,4 @@
 ﻿@page "/Settings"
-@using Microsoft.AspNetCore.Components
-@using StreamBadger.Models
 @inject SettingsStore SettingsStore
 @inject NavigationManager NavigationManager
 
@@ -14,12 +12,16 @@
                 </div>
                 <h2>OBS WebSockets</h2>
                 <div class="mb-3">
-                    <label for="obs-port" class="form-label">OBS Port:</label>
-                    <InputNumber @bind-Value="Model.ObsWebSocketsPort" class="form-control"/>
+                    <label for="obs-bs-name" class="form-label">OBS Browser Source Name:</label>
+                    <InputText @bind-Value="Model.ObsBrowserSourceName" type="text" class="form-control" id="obs-bs-name"/>
                 </div>
                 <div class="mb-3">
-                    <label for="obs-port" class="form-label">OBS Password:</label>
-                    <InputText @bind-Value="Model.ObsWebSocketsPassword" type="password" class="form-control"/>
+                    <label for="obs-port" class="form-label">OBS Port:</label>
+                    <InputNumber @bind-Value="Model.ObsWebSocketsPort" class="form-control" id="obs-port"/>
+                </div>
+                <div class="mb-3">
+                    <label for="obs-password" class="form-label">OBS Password:</label>
+                    <InputText @bind-Value="Model.ObsWebSocketsPassword" type="password" class="form-control" id="obs-password"/>
                 </div>
                 <div>
                     <button type="submit" class="btn btn-outline-success">Save</button>
