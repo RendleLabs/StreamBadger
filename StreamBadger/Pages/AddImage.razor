@@ -1,0 +1,183 @@
+﻿@page "/AddImage"
+@using System.Text
+@using System.IO
+@inject ImageStore ImageStore
+@inject SoundStore SoundStore
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-4">
+      <EditForm Model="@_uploadImageModel" OnValidSubmit="ImageUploadSubmit" class="form">
+        <div class="mb-3">
+          <InputFile OnChange="@OnInputFileChange" class="form-control-file" required/>
+        </div>
+        <div class="mb-3">
+          <label for="name" class="form-label">Name:</label>
+          <InputText id="name" class="form-control" @bind-Value="_uploadImageModel.Name" required></InputText>
+        </div>
+		<div class="mb-3">
+            <ButtonSwitch ValueA="width" LabelA="Width"
+                          ValueB="height" LabelB="Height" @bind-Value="WidthHeight" />
+			<input type="range" @bind-value="Size" class="form-range" min="0" max="100" step="1" id="width">
+		</div>
+		<div class="mb-3">
+            <ButtonSwitch ValueA="left" LabelA="Left"
+                          ValueB="right" LabelB="Right" @bind-Value="LeftRight" />
+			<input type="range" @bind-value="HPos" class="form-range" min="0" max="100" step="1" id="left">
+		</div>
+		<div class="mb-3">
+            <ButtonSwitch ValueA="top" LabelA="Top"
+                          ValueB="bottom" LabelB="Bottom" @bind-Value="TopBottom" />
+			<input type="range" @bind-value="VPos" class="form-range" min="0" max="100" step="1" id="left">
+		</div>
+        <div class="mb-3">
+          <label for="sound" class="form-label">Sound:</label>
+		  <InputText id="sound" class="form-control" @bind-Value="_uploadImageModel.Sound" />
+		  @* <InputSelect id="sound" class="form-control form-select" @bind-Value="_uploadImageModel.Sound"> *@
+    @*         <option value="" selected>(None)</option> *@
+    @*         @foreach (var sound in Sounds) *@
+    @*         { *@
+    @*             <option value="@sound">@sound</option> *@
+    @*         } *@
+    @*       </InputSelect> *@
+        </div>
+        <div>
+          <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+      </EditForm>
+        <a href="https://getbootstrap.com/docs/4.3/components/forms/">Bootstrap</a>
+    </div>
+    <div class="col-8">
+      <div class="image-preview-container">
+        <img src="@_imageSrc" class="image-preview" style="@_imageStyle">
+      </div>
+    </div>
+  </div>
+</div>
+
+@code {
+  const long MaxUploadSize = 1024 * 1024 * 4;
+
+  UploadImageModel _uploadImageModel = new();
+  IBrowserFile _file;
+  private ElementReference _image;
+  private string _imageSrc;
+  private string _imageStyle = "width: 50%;";
+
+    private string _widthHeight = "width";
+    private string _leftRight = "left";
+    private string _topBottom = "top";
+
+    private float _size = 50f;
+    private float _hPos = 0f;
+    private float _vPos = 0f;
+
+    public string[] Sounds { get; set; } = Array.Empty<string>();
+
+    public string WidthHeight
+    {
+        get => _widthHeight;
+        set
+        {
+            _widthHeight = value;
+            SetImageStyle();
+        }
+    }
+
+    public string LeftRight
+    {
+        get => _leftRight;
+        set
+        {
+            _leftRight = value;
+            SetImageStyle();
+        }
+    }
+
+    public string TopBottom
+    {
+        get => _topBottom;
+        set
+        {
+            _topBottom = value;
+            SetImageStyle();
+        }
+    }
+
+    public float Size
+    {
+        get => _size;
+        set
+        {
+            _size = value;
+            SetImageStyle();
+        }
+    }
+
+    public float HPos
+    {
+        get => _hPos;
+        set
+        {
+            _hPos = value;
+            SetImageStyle();
+        }
+    }
+
+    public float VPos
+    {
+        get => _vPos;
+        set
+        {
+            _vPos = value;
+            SetImageStyle();
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        Sounds = SoundStore.GetSoundNames().ToArray();
+    }
+
+    private void SetImageStyle()
+    {
+        _imageStyle = $"{_widthHeight}: {_size}%; {_leftRight}: {_hPos}%; {_topBottom}: {_vPos}%;";
+    }
+
+    private string GetImageCss()
+    {
+        var builder = new StringBuilder();
+        if (_widthHeight == "width")
+        {
+            builder.Append($"width: {_size}vw;");
+        }
+        else
+        {
+            builder.Append($"height: {_size}vh;");
+        }
+        builder.Append($"{_leftRight}:{_hPos}vw;");
+        builder.Append($"{_topBottom}:{_vPos}vh;");
+        return builder.ToString();
+    }
+
+  private async Task ImageUploadSubmit()
+  {
+    _uploadImageModel.Css = GetImageCss();
+    await ImageStore.AddAsync(_file.OpenReadStream(MaxUploadSize), _file.ContentType, _uploadImageModel);
+  }
+
+  private async Task OnInputFileChange(InputFileChangeEventArgs arg)
+  {
+    _file = arg.File;
+    byte[] bytes;
+    using (var stream = _file.OpenReadStream())
+    using (var memory = new MemoryStream())
+    {
+      await stream.CopyToAsync(memory);
+      bytes = memory.ToArray();
+      _imageSrc = $"data:{_file.ContentType};base64," + Convert.ToBase64String(bytes);
+      await InvokeAsync(StateHasChanged);
+    }
+  }
+
+}

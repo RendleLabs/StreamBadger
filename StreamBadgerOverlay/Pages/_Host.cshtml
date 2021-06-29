@@ -15,6 +15,46 @@
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link href="css/site.css" rel="stylesheet" />
     @* <link href="StreamBadgerOverlay.styles.css" rel="stylesheet" /> *@
+    <style>
+        body {
+            overflow: hidden;
+        }
+        img.perry {
+            animation-duration: 2s;
+            animation-name: left_to_right;
+            animation-timing-function: linear;
+            left: 100%;
+        }
+
+        img.splash {
+            animation-duration: 1s;
+            animation-name: grow;
+        }
+
+        img.boom {
+            animation-duration: 1s;
+            transform-origin: bottom center;
+            animation-name: grow;
+        }
+
+        @@keyframes left_to_right {
+            from {
+                left: 0;
+            }
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        @@keyframes grow {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+    </style>
 </head>
 <body>
     <component type="typeof(App)" render-mode="ServerPrerendered" />
@@ -38,6 +78,13 @@
         });
         element.play();
     };
+
+    window.imageAnimation = function(id, dotnetHelper) {
+        const element = document.getElementById(id);
+        element.addEventListener('animationend', function() {
+            dotnetHelper.invokeMethodAsync('OnAnimationEnded', id);
+        });
+    }
 </script>
 
     <script src="_framework/blazor.server.js"></script>

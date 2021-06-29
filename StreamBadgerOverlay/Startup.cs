@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -40,7 +41,10 @@ namespace StreamBadgerOverlay
             services.AddSingleton<SoundTemp>();
             services.AddSingleton<SettingsStore>();
             services.AddRazorPages();
-            services.AddServerSideBlazor();
+            services.AddServerSideBlazor(options =>
+            {
+                options.DetailedErrors = true;
+            });
             services.AddHostedService<TwitchBot>();
             services.AddHostedService<ObsWebSocketService>();
         }

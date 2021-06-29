@@ -1,9 +1,10 @@
 ﻿@using StreamBadger.Shared
 @inject ImageStore ImageStore
+@inject IJSRuntime JS
 
 @if (Image is not null)
 {
-	<img src="/images/@Image.Name.TrimStart('/')" style="@Image.Style" class="ob-image" />
+	<img src="/images/@Image.Name" style="@Image.Style" class="ob-image @Image.Name" id="@Image.Name" />
 }
 
 @if (Image?.Sound is {Length: >0})
@@ -23,10 +24,27 @@
 
     protected override async Task OnInitializedAsync()
     {
-      Image = await ImageStore.GetImage(Name);
+        var image = await ImageStore.GetImage(Name);
+        if (image is not null)
+        {
+          Image = image with {Name = Name.TrimStart('/')};
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (Image is null) return;
+        var dotnetHelper = DotNetObjectReference.Create(this);
+        await JS.InvokeVoidAsync("imageAnimation", Image.Name, dotnetHelper);
     }
 
     private async Task OnSoundEnded(string _)
+    {
+        await Ended.InvokeAsync(Image.Name);
+    }
+
+    [JSInvokable]
+    public async Task OnAnimationEnded(string _)
     {
         await Ended.InvokeAsync(Image.Name);
     }
