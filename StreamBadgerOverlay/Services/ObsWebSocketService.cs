@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OBSWebsocketDotNet;
+using SlobsSpike;
 using StreamBadger.Shared;
 using System;
 using System.Collections.Generic;
@@ -31,27 +32,38 @@ namespace StreamBadgerOverlay.Services
         private async Task ToggleOBSSource(bool toggle)
         {
             var settings = await _settingsStore.LoadAsync();
-            var browserSourceName = settings.ObsBrowserSourceName;
 
-            if (string.IsNullOrEmpty(browserSourceName)) return;
-
-            OBSWebsocket obsWebsocket = new OBSWebsocket();
-            var obsWebSocketUrl = $"ws://localhost:{settings.ObsWebSocketsPort}";
-            var obsWebSocketPassword = settings.ObsWebSocketsPassword;
-
-            try
+            if (settings == null) return;
+            if (settings.SlobsBrowserSourceName is {Length: > 0})
             {
-                obsWebsocket.Connect(obsWebSocketUrl, obsWebSocketPassword);
-                obsWebsocket.SetSourceRender(browserSourceName, toggle);
-                if (toggle)
-                {
-                    obsWebsocket.RefreshBrowserSource(browserSourceName);
-                }
-                obsWebsocket.Disconnect();
+                using var client = new SlobsClient();
+                await client.ConnectAsync();
+                await client.SetSourceVisibility("StreamBadger", toggle);
             }
-            catch (Exception ex)
+            else if (settings.ObsBrowserSourceName is {Length: > 0})
             {
-                _logger.LogError(ex, ex.Message);
+                var browserSourceName = settings.ObsBrowserSourceName;
+
+                if (string.IsNullOrEmpty(browserSourceName)) return;
+
+                OBSWebsocket obsWebsocket = new OBSWebsocket();
+                var obsWebSocketUrl = $"ws://localhost:{settings.ObsWebSocketsPort}";
+                var obsWebSocketPassword = settings.ObsWebSocketsPassword;
+
+                try
+                {
+                    obsWebsocket.Connect(obsWebSocketUrl, obsWebSocketPassword);
+                    obsWebsocket.SetSourceRender(browserSourceName, toggle);
+                    if (toggle)
+                    {
+                        obsWebsocket.RefreshBrowserSource(browserSourceName);
+                    }
+                    obsWebsocket.Disconnect();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, ex.Message);
+                } 
             }
         }
     }

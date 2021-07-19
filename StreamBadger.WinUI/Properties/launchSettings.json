@@ -1,7 +1,7 @@
 {
   "profiles": {
     "StreamBadger.WinUI": {
-      "commandName": "AppContainer"
+      "commandName": "MsixPackage"
     }
   }
 }

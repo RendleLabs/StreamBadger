@@ -32,14 +32,14 @@
 		</div>
         <div class="mb-3">
           <label for="sound" class="form-label">Sound:</label>
-		  <InputText id="sound" class="form-control" @bind-Value="_uploadImageModel.Sound" />
-		  @* <InputSelect id="sound" class="form-control form-select" @bind-Value="_uploadImageModel.Sound"> *@
-    @*         <option value="" selected>(None)</option> *@
-    @*         @foreach (var sound in Sounds) *@
-    @*         { *@
-    @*             <option value="@sound">@sound</option> *@
-    @*         } *@
-    @*       </InputSelect> *@
+		  @*<InputText id="sound" class="form-control" @bind-Value="_uploadImageModel.Sound" />*@
+		   <InputSelect id="sound" class="form-control form-select" @bind-Value="_uploadImageModel.Sound">
+             <option value="" selected>(None)</option>
+             @foreach (var sound in Sounds)
+             {
+                 <option value="@sound">@sound</option>
+             }
+           </InputSelect> 
         </div>
         <div>
           <button type="submit" class="btn btn-success">Submit</button>

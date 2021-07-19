@@ -1,23 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31220.234
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31512.422
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamBadger", "StreamBadger\StreamBadger.csproj", "{6C45BA9C-19D8-4F98-9B98-2F0F3234C851}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamBadger", "StreamBadger\StreamBadger.csproj", "{6DDBC60B-061E-46EA-B22B-0DEE502CE397}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamBadger.WinUI", "StreamBadger.WinUI\StreamBadger.WinUI.csproj", "{9039540D-9F9A-4CC3-80D7-3953C07C8369}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamBadger.WinUI", "StreamBadger.WinUI\StreamBadger.WinUI.csproj", "{3D8C7191-346D-41E0-ADDE-254A9150A990}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamBadger.Shared", "StreamBadger.Shared\StreamBadger.Shared.csproj", "{8A325AC5-9F22-4070-A399-D1CB8FC8FFAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamBadger.Shared", "StreamBadger.Shared\StreamBadger.Shared.csproj", "{49865441-E46C-4883-98F0-AB11B01EB351}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamBadgerOverlay", "StreamBadgerOverlay\StreamBadgerOverlay.csproj", "{B216A771-85BE-4505-8B8C-D1CC462602D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamBadger.Components", "StreamBadger.Components\StreamBadger.Components.csproj", "{667469F4-4086-4AFC-A5DE-DF6A362DB465}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{347F03E7-5600-46A5-B67E-F28C60F50BA6}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamBadgerOverlay.Tests", "test\StreamBadgerOverlay.Tests\StreamBadgerOverlay.Tests.csproj", "{6AA09FF9-CB5B-4AC8-A400-F6E8BF6CD63C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamBadger.Components", "StreamBadger.Components\StreamBadger.Components.csproj", "{5265303C-5D4A-4710-9BDD-118AD4921210}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamBadger.Components.Tests", "test\StreamBadger.Components.Tests\StreamBadger.Components.Tests.csproj", "{6C4A929E-5E69-4D61-8DF7-8C6988EE8719}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamBadgerOverlay", "StreamBadgerOverlay\StreamBadgerOverlay.csproj", "{3BD91B46-9F14-4D6B-B0B7-FB2C51CEF35B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,45 +19,33 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6C45BA9C-19D8-4F98-9B98-2F0F3234C851}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C45BA9C-19D8-4F98-9B98-2F0F3234C851}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6C45BA9C-19D8-4F98-9B98-2F0F3234C851}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{6C45BA9C-19D8-4F98-9B98-2F0F3234C851}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6C45BA9C-19D8-4F98-9B98-2F0F3234C851}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6C45BA9C-19D8-4F98-9B98-2F0F3234C851}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{9039540D-9F9A-4CC3-80D7-3953C07C8369}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9039540D-9F9A-4CC3-80D7-3953C07C8369}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9039540D-9F9A-4CC3-80D7-3953C07C8369}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{9039540D-9F9A-4CC3-80D7-3953C07C8369}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9039540D-9F9A-4CC3-80D7-3953C07C8369}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9039540D-9F9A-4CC3-80D7-3953C07C8369}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{8A325AC5-9F22-4070-A399-D1CB8FC8FFAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A325AC5-9F22-4070-A399-D1CB8FC8FFAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A325AC5-9F22-4070-A399-D1CB8FC8FFAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A325AC5-9F22-4070-A399-D1CB8FC8FFAD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B216A771-85BE-4505-8B8C-D1CC462602D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B216A771-85BE-4505-8B8C-D1CC462602D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B216A771-85BE-4505-8B8C-D1CC462602D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B216A771-85BE-4505-8B8C-D1CC462602D4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6AA09FF9-CB5B-4AC8-A400-F6E8BF6CD63C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6AA09FF9-CB5B-4AC8-A400-F6E8BF6CD63C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6AA09FF9-CB5B-4AC8-A400-F6E8BF6CD63C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6AA09FF9-CB5B-4AC8-A400-F6E8BF6CD63C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5265303C-5D4A-4710-9BDD-118AD4921210}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5265303C-5D4A-4710-9BDD-118AD4921210}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5265303C-5D4A-4710-9BDD-118AD4921210}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5265303C-5D4A-4710-9BDD-118AD4921210}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6C4A929E-5E69-4D61-8DF7-8C6988EE8719}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C4A929E-5E69-4D61-8DF7-8C6988EE8719}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6C4A929E-5E69-4D61-8DF7-8C6988EE8719}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6C4A929E-5E69-4D61-8DF7-8C6988EE8719}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DDBC60B-061E-46EA-B22B-0DEE502CE397}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DDBC60B-061E-46EA-B22B-0DEE502CE397}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DDBC60B-061E-46EA-B22B-0DEE502CE397}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{6DDBC60B-061E-46EA-B22B-0DEE502CE397}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DDBC60B-061E-46EA-B22B-0DEE502CE397}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DDBC60B-061E-46EA-B22B-0DEE502CE397}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{3D8C7191-346D-41E0-ADDE-254A9150A990}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D8C7191-346D-41E0-ADDE-254A9150A990}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D8C7191-346D-41E0-ADDE-254A9150A990}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{3D8C7191-346D-41E0-ADDE-254A9150A990}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D8C7191-346D-41E0-ADDE-254A9150A990}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D8C7191-346D-41E0-ADDE-254A9150A990}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{49865441-E46C-4883-98F0-AB11B01EB351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49865441-E46C-4883-98F0-AB11B01EB351}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49865441-E46C-4883-98F0-AB11B01EB351}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49865441-E46C-4883-98F0-AB11B01EB351}.Release|Any CPU.Build.0 = Release|Any CPU
+		{667469F4-4086-4AFC-A5DE-DF6A362DB465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{667469F4-4086-4AFC-A5DE-DF6A362DB465}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{667469F4-4086-4AFC-A5DE-DF6A362DB465}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{667469F4-4086-4AFC-A5DE-DF6A362DB465}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BD91B46-9F14-4D6B-B0B7-FB2C51CEF35B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BD91B46-9F14-4D6B-B0B7-FB2C51CEF35B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BD91B46-9F14-4D6B-B0B7-FB2C51CEF35B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BD91B46-9F14-4D6B-B0B7-FB2C51CEF35B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{6AA09FF9-CB5B-4AC8-A400-F6E8BF6CD63C} = {347F03E7-5600-46A5-B67E-F28C60F50BA6}
-		{6C4A929E-5E69-4D61-8DF7-8C6988EE8719} = {347F03E7-5600-46A5-B67E-F28C60F50BA6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}

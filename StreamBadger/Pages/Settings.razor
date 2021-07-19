@@ -10,9 +10,16 @@
                     <label for="port" class="form-label">Server Port:</label>
                     <InputNumber @bind-Value="Model.Port" class="form-control"/>
                 </div>
+                <hr>
+                <h2>StreamLabs OBS</h2>
+                <div class="mb-3">
+                    <label for="obs-bs-name" class="form-label">Browser Source Name:</label>
+                    <InputText @bind-Value="Model.SlobsBrowserSourceName" type="text" class="form-control" id="slobs-bs-name"/>
+                </div>
+                <hr>
                 <h2>OBS WebSockets</h2>
                 <div class="mb-3">
-                    <label for="obs-bs-name" class="form-label">OBS Browser Source Name:</label>
+                    <label for="obs-bs-name" class="form-label">Browser Source Name:</label>
                     <InputText @bind-Value="Model.ObsBrowserSourceName" type="text" class="form-control" id="obs-bs-name"/>
                 </div>
                 <div class="mb-3">

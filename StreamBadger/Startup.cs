@@ -1,19 +1,21 @@
-﻿using System;
-using Microsoft.AspNetCore.Components.WebView.Maui;
+﻿using Microsoft.AspNetCore.Components.WebView.Maui;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 using Microsoft.Maui.Controls.Hosting;
-using StreamBadger.Data;
-using StreamBadger.Shared;
+using Microsoft.Maui.Controls.Xaml;
 using StreamBadger.Clients;
-using Microsoft.Maui.LifecycleEvents;
+using System;
+using StreamBadger.Shared;
 using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
+using Microsoft.Maui.LifecycleEvents;
+
+[assembly: XamlCompilationAttribute(XamlCompilationOptions.Compile)]
 
 namespace StreamBadger
 {
-	public class Startup : IStartup
+    public class Startup : IStartup
 	{
 		public void Configure(IAppHostBuilder appBuilder)
 		{
@@ -26,7 +28,6 @@ namespace StreamBadger
 					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				})
 				.ConfigureServices(ConfigureServices);
-
 #if(WINDOWS)
 			appBuilder
                 .ConfigureLifecycleEvents(builder =>
@@ -45,12 +46,11 @@ namespace StreamBadger
                     });
                 });
 #endif
-        }
+		}
 
-		private void ConfigureServices(IServiceCollection services)
+        private void ConfigureServices(IServiceCollection services)
         {
             services.AddBlazorWebView();
-            services.AddSingleton<WeatherForecastService>();
 
             services.AddSingleton<ImageStore>();
             services.AddSingleton<SoundStore>();
@@ -94,6 +94,5 @@ namespace StreamBadger
 
         private IHost _overlay;
         private Task _overlayTask;
-
-    }
+	}
 }
