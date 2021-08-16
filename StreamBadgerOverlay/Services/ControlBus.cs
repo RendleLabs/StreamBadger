@@ -51,6 +51,12 @@ namespace StreamBadgerOverlay.Services
                             await ClearAll.Invoke();
                         }
                         break;
+                    case FollowEvent follow:
+                        if (FollowEvent is not null)
+                        {
+                            await FollowEvent.Invoke(follow);
+                        }
+                        break;
                 }
             }
         }
@@ -62,12 +68,15 @@ namespace StreamBadgerOverlay.Services
 
         public event Func<ToggleImage, Task> ToggleImage;
         public event Func<PlaySound, Task> PlaySound;
+        public event Func<FollowEvent, Task> FollowEvent;
         public event Func<Task> ClearAll;
     }
 
     public record ToggleImage(string Name, string? Sound = null);
 
     public record PlaySound(string Name);
+
+    public record FollowEvent(string Name);
 
     public record ClearAll;
 }

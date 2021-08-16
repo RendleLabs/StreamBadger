@@ -1,8 +1,8 @@
-﻿using StreamBadger.Clients;
-using StreamBadger.Models;
+﻿using StreamBadger.Models;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using StreamBadger.Shared.Clients;
 
 namespace StreamBadger.Shared
 {

@@ -31,17 +31,20 @@
 	<ItemGroup>
 		<Compile Include="..\StreamBadger\**\*.cs" Exclude="..\StreamBadger\bin\**;..\StreamBadger\obj\**;..\StreamBadger\Platforms\**" Link="%(RecursiveDir)%(Filename)%(Extension)" />
 		<MauiXaml Include="..\StreamBadger\**\*.xaml" Exclude="..\StreamBadger\bin\**;..\StreamBadger\obj\**" Link="%(RecursiveDir)%(FileName)%(Extension)" />
-		<_ThisProjectStaticWebAsset Include="..\StreamBadger\wwwroot\**" Link="wwwroot\%(RecursiveDir)%(Filename)%(Extension)" RelativePath="%(RecursiveDir)%(Filename)%(Extension)" />
-		<None Include="@(_ThisProjectStaticWebAsset)" />
+		<Content Include="..\StreamBadger\wwwroot\**" Link="wwwroot\%(RecursiveDir)%(Filename)%(Extension)" />
 		<RazorComponent Include="..\StreamBadger\**\*.razor" Exclude="..\StreamBadger\bin\**;..\StreamBadger\obj\**" Link="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.0-preview.6.*" />
-		<PackageReference Include="Microsoft.ProjectReunion" Version="0.8.1" />
-		<PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.8.1" />
-		<PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.8.1" />
-		<PackageReference Include="Microsoft.ProjectReunion.InteractiveExperiences" Version="0.8.1" NoWarn="NU1701" />
+	  <Compile Remove="..\StreamBadger\Data\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.0-preview.7.21378.6" />
+		<PackageReference Include="Microsoft.ProjectReunion" Version="0.8.2" />
+		<PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.8.2" />
+		<PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.8.2" />
+		<PackageReference Include="Microsoft.ProjectReunion.InteractiveExperiences" Version="0.8.2" NoWarn="NU1701" />
 	</ItemGroup>
 
 	<ItemGroup>

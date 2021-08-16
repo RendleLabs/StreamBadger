@@ -12,6 +12,8 @@ using TwitchLib.Client.Models;
 using TwitchLib.Communication.Clients;
 using TwitchLib.Communication.Models;
 using TwitchLib.PubSub;
+using TwitchLib.PubSub.Events;
+using OnLogArgs = TwitchLib.Client.Events.OnLogArgs;
 
 namespace StreamBadgerOverlay.Services
 {
@@ -59,13 +61,35 @@ namespace StreamBadgerOverlay.Services
             _client.OnMessageReceived += OnMessageReceived;
             _client.OnLog += ClientOnOnLog;
             _client.Connect();
-            
-            // _pubSub = new TwitchPubSub();
-            // _pubSub.OnChannelPointsRewardRedeemed += OnChannelPointsRewardRedeemed;
-            // _pubSub.OnPubSubServiceError += OnPubSubServiceError;
-            // _pubSub.ListenToChannelPoints(_twitchAuth.SessionData.Id);
-            // _pubSub.Connect();
-            // _pubSub.SendTopics(accessToken);
+
+            _pubSub = new TwitchPubSub();
+            _pubSub.OnChannelPointsRewardRedeemed += OnChannelPointsRewardRedeemed;
+            _pubSub.OnFollow += OnFollow;
+            _pubSub.OnPubSubServiceError += OnPubSubServiceError;
+            _pubSub.ListenToChannelPoints(TwitchAuthStatic.Id);
+            _pubSub.ListenToFollows(TwitchAuthStatic.Id);
+            _pubSub.Connect();
+            _pubSub.SendTopics(accessToken);
+        }
+
+        private async void OnFollow(object? sender, OnFollowArgs args)
+        {
+            var followEvent = new FollowEvent(args.DisplayName);
+            await _controlBus.AddAsync(followEvent);
+        }
+
+        private void OnPubSubServiceError(object sender, TwitchLib.PubSub.Events.OnPubSubServiceErrorArgs args)
+        {
+            Debug.WriteLine(args.Exception.Message);
+        }
+
+        private async void OnChannelPointsRewardRedeemed(object sender, TwitchLib.PubSub.Events.OnChannelPointsRewardRedeemedArgs args)
+        {
+            if (args.RewardRedeemed.Redemption.Reward.Title.Equals("Applause", StringComparison.OrdinalIgnoreCase))
+            {
+                var playSound = new PlaySound("applause");
+                await _controlBus.AddAsync(playSound);
+            }
         }
 
         private async void OnMessageReceived(object? sender, OnMessageReceivedArgs e)

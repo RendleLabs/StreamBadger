@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace StreamBadger.Clients
+namespace StreamBadger.Shared.Clients
 {
     public class ServerClient : IServerClient
     {

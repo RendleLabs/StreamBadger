@@ -2,7 +2,6 @@
 
 	<PropertyGroup>
 		<!-- iOS, Android, MacCatalyst -->
-		<!--<TargetFrameworks>net6.0-ios;net6.0-android;net6.0-maccatalyst</TargetFrameworks>-->
 		<TargetFramework>net6.0-maccatalyst</TargetFramework>
 		<OutputType>Exe</OutputType>
 		<UseMaui>true</UseMaui>
@@ -35,20 +34,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.0-preview.6.*" />
+		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.0-preview.7.21378.6" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\StreamBadger.Components\StreamBadger.Components.csproj" />
 	  <ProjectReference Include="..\StreamBadger.Shared\StreamBadger.Shared.csproj" />
-	  <ProjectReference Include="..\StreamBadgerOverlay\StreamBadgerOverlay.csproj" />
 	</ItemGroup>
 
 	<PropertyGroup>
 		<InvariantGlobalization Condition="$(TargetFramework.Contains('-maccatalyst'))">true</InvariantGlobalization>
-		<!--<RuntimeIdentifier Condition="$(TargetFramework.Contains('-ios'))">iossimulator-x64</RuntimeIdentifier>-->
+		<RuntimeIdentifier Condition="$(TargetFramework.Contains('-ios'))">iossimulator-x64</RuntimeIdentifier>
 		<RuntimeIdentifier Condition="$(TargetFramework.Contains('-maccatalyst'))">maccatalyst-x64</RuntimeIdentifier>
-		<!--<UseInterpreter Condition="$(TargetFramework.Contains('-android'))">False</UseInterpreter>-->
+		<UseInterpreter Condition="$(TargetFramework.Contains('-android'))">False</UseInterpreter>
 	</PropertyGroup>
 
 </Project>

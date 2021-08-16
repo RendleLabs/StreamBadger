@@ -16,7 +16,6 @@ using OBSWebsocketDotNet;
 using StreamBadger;
 using StreamBadger.Endpoints;
 using StreamBadger.Shared;
-using StreamBadgerOverlay.Data;
 using StreamBadgerOverlay.Endpoints;
 using StreamBadgerOverlay.Services;
 
@@ -80,6 +79,7 @@ namespace StreamBadgerOverlay
                 endpoints.MapGet("/play/{sound}", PlayEndpoint.Play);
                 endpoints.MapGet("/temp/sounds/{sound}", TempSounds.Play);
                 endpoints.MapGet("/clear", ClearEndpoint.Clear);
+                endpoints.MapGet("/follow/{name}", FollowEventEndpoint.Get);
 
                 endpoints.MapFallbackToPage("/_Host");
             });

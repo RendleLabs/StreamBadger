@@ -1,6 +1,8 @@
 ﻿@page "/AddImage"
 @using System.Text
 @using System.IO
+@using Microsoft.AspNetCore.Components.Forms
+@using StreamBadger.Shared
 @inject ImageStore ImageStore
 @inject SoundStore SoundStore
 
@@ -58,7 +60,7 @@
 @code {
   const long MaxUploadSize = 1024 * 1024 * 4;
 
-  UploadImageModel _uploadImageModel = new();
+    readonly UploadImageModel _uploadImageModel = new();
   IBrowserFile _file;
   private ElementReference _image;
   private string _imageSrc;

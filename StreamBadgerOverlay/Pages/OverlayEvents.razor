@@ -1,0 +1,49 @@
+﻿@using StreamBadgerOverlay.Services
+@using StreamBadger.Shared
+@using StreamBadgerOverlay.Models
+@inject ControlBus _controlBus
+@inject SettingsStore _settingsStore;
+
+@foreach (var model in Models)
+{
+    <DisplayText Model="model"/>
+}
+
+@code {
+
+    public List<DisplayTextModel> Models = new();
+
+    protected override void OnInitialized()
+    {
+        _controlBus.FollowEvent += OnFollowEvent;
+    }
+
+    private async Task OnFollowEvent(FollowEvent arg)
+    {
+        var settings = await _settingsStore.LoadAsync();
+        if (settings.FollowEvent is null) return;
+
+        if (settings.FollowEvent.Image is {Length: > 0})
+        {
+            await _controlBus.AddAsync(new ToggleImage(settings.FollowEvent.Image, settings.FollowEvent.Sound));
+        }
+
+        if (settings.FollowEvent.TextTemplate is {Length: > 0})
+        {
+            var text = settings.FollowEvent.TextTemplate.Replace("{NAME}", arg.Name);
+
+            var model = new DisplayTextModel
+            {
+                Font = settings.FollowEvent.TextFont,
+                Position = settings.FollowEvent.TextPosition,
+                Text = text
+            };
+            Models.Add(model);
+            await InvokeAsync(StateHasChanged);
+            await Task.Delay(TimeSpan.FromSeconds(5));
+            Models.Remove(model);
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+}

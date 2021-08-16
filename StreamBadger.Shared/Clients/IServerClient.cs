@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace StreamBadger.Clients
+namespace StreamBadger.Shared.Clients
 {
     public interface IServerClient
     {

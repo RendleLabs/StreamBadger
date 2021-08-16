@@ -1,0 +1,124 @@
+﻿@page "/Settings/Events"
+@inject SettingsStore SettingsStore
+@inject NavigationManager NavigationManager
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <EditForm Model="@Model" class="form" OnValidSubmit="OnSubmit">
+                <div class="row">
+                    <div class="col-12">
+                        <h3>New Follow</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3 mb-3">
+                        <label for="new-follow-image" class="form-label">Image:</label>
+                        <InputText Value="@Model.FollowEvent.Image"
+                                   ValueChanged="OnFollowImageChange"
+                                   ValueExpression="() => Model.FollowEvent.Image"/>
+                        <img src="@FollowImage" style="display: @DisplayFollowImage; width: 100%;"/>
+                    </div>
+                    <div class="col-3">
+                        <label for="follow-text-template" class="form-label">Text:</label>
+                        <InputTextArea @bind-Value="Model.FollowEvent.TextTemplate" class="form-control"/>
+                    </div>
+                    <div class="col-3">
+                        <InputRadioGroup @bind-Value="Model.FollowEvent.TextPosition">
+                            <div class="row">
+                                <div class="col-4">
+                                    <InputRadio Value="TextPosition.TopLeft" class="btn-check" id="follow-top-left"/>
+                                    <label class="btn btn-secondary" for="follow-top-left">Top<br />Left</label>
+                                </div>
+                                <div class="col-4">
+                                    <InputRadio Value="TextPosition.TopCenter" class="btn-check" id="follow-top-center"/>
+                                    <label class="btn btn-secondary" for="follow-top-center">Top Center</label>
+                                </div>
+                                <div class="col-4">
+                                    <InputRadio Value="TextPosition.TopRight" class="btn-check" id="follow-top-right"/>
+                                    <label class="btn btn-secondary" for="follow-top-right">Top Right</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <InputRadio Value="TextPosition.MiddleLeft" class="btn-check" id="follow-middle-left"/>
+                                    <label class="btn btn-secondary" for="follow-middle-left">Middle Left</label>
+                                </div>
+                                <div class="col-4">
+                                    <InputRadio Value="TextPosition.MiddleCenter" class="btn-check" id="follow-middle-center"/>
+                                    <label class="btn btn-secondary" for="follow-middle-center">Middle Center</label>
+                                </div>
+                                <div class="col-4">
+                                    <InputRadio Value="TextPosition.MiddleRight" class="btn-check" id="follow-middle-right"/>
+                                    <label class="btn btn-secondary" for="follow-middle-right">Middle Right</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <InputRadio Value="TextPosition.BottomLeft" class="btn-check" id="follow-bottom-left"/>
+                                    <label class="btn btn-secondary" for="follow-bottom-left">Bottom Left</label>
+                                </div>
+                                <div class="col-4">
+                                    <InputRadio Value="TextPosition.BottomCenter" class="btn-check" id="follow-bottom-center"/>
+                                    <label class="btn btn-secondary" for="follow-bottom-center">Bottom Center</label>
+                                </div>
+                                <div class="col-4">
+                                    <InputRadio Value="TextPosition.BottomRight" class="btn-check" id="follow-bottom-right"/>
+                                    <label class="btn btn-secondary" for="follow-bottom-right">Bottom Right</label>
+                                </div>
+                            </div>
+                        </InputRadioGroup>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-1">
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="button" class="btn btn-secondary" @onclick="_ => OnCancel()">Cancel</button>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    public SettingsModel Model { get; set; } = new();
+
+    public string FollowImage { get; set; }
+
+    public string DisplayFollowImage { get; set; } = "none";
+
+    protected override async Task OnInitializedAsync()
+    {
+        Model = await SettingsStore.LoadAsync();
+    }
+
+    private async Task OnSubmit()
+    {
+        await SettingsStore.SaveAsync(Model);
+        NavigationManager.NavigateTo("/");
+    }
+
+    private async Task OnFollowImageChange(string value)
+    {
+        Model.FollowEvent.Image = value;
+        if (value is {Length: > 0})
+        {
+            FollowImage = $"http://localhost:25293/images/{Model.FollowEvent.Image}";
+            DisplayFollowImage = "block";
+        }
+        else
+        {
+            FollowImage = null;
+            DisplayFollowImage = "none";
+        }
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void OnCancel()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+
+}

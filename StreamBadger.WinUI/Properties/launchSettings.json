@@ -1,7 +1,8 @@
 {
   "profiles": {
     "StreamBadger.WinUI": {
-      "commandName": "MsixPackage"
+      "commandName": "MsixPackage",
+      "nativeDebugging": false
     }
   }
 }

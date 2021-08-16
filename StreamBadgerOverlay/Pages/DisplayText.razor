@@ -1,0 +1,40 @@
+﻿@using StreamBadgerOverlay.Models
+@using StreamBadger.Shared
+<div class="text-container" style="@ContainerStyle">
+    <div style="@TextStyle">
+        @Text
+    </div>
+</div>
+
+@code {
+
+    public string ContainerStyle { get; set; }
+    public string TextStyle { get; set; }
+    public string Text { get; set; }
+
+    [Parameter]
+    public DisplayTextModel Model { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Text = Model.Text;
+        ContainerStyle = Model.Position switch
+        {
+            TextPosition.TopLeft => "justify-content: flex-start; align-content: flex-start",
+            TextPosition.TopCenter => "justify-content: center; align-content: flex-start",
+            TextPosition.TopRight => "justify-content: flex-end; align-content: flex-start",
+            TextPosition.MiddleLeft => "justify-content: flex-start; align-content: center",
+            TextPosition.MiddleCenter => "justify-content: center; align-content: center",
+            TextPosition.MiddleRight => "justify-content: flex-end; align-content: center",
+            TextPosition.BottomLeft => "justify-content: flex-start; align-content: flex-end",
+            TextPosition.BottomCenter => "justify-content: center; align-content: flex-end",
+            TextPosition.BottomRight => "justify-content: flex-end; align-content: flex-end",
+            _ => throw new ArgumentOutOfRangeException()
+        };
+        if (Model.Font is {Length: > 0})
+        {
+            TextStyle = $"font-face: '{Model.Font}'";
+        }
+    }
+
+}

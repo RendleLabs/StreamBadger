@@ -22,9 +22,9 @@
 
   <ItemGroup>
     <PackageReference Include="obs-websocket-dotnet" Version="4.9.0" />
-    <PackageReference Include="TwitchLib.Api" Version="3.2.4-preview-d093e175264edce7ccb64c37f7a334f375be79f3" />
-    <PackageReference Include="TwitchLib.Client" Version="3.2.3-preview-94b33cd801bf51e1d81b179ce10c7d896072b4c3" />
-    <PackageReference Include="TwitchLib.PubSub" Version="3.2.3-preview-b9bdd61952511de0bcc4fac5fc7cd7dac9be1c0c" />
+    <PackageReference Include="TwitchLib.Api" Version="3.2.4" />
+    <PackageReference Include="TwitchLib.Client" Version="3.2.3" />
+    <PackageReference Include="TwitchLib.PubSub" Version="3.2.3" />
   </ItemGroup>
 
   <ItemGroup>
