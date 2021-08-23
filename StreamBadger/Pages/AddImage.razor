@@ -6,7 +6,30 @@
 @inject ImageStore ImageStore
 @inject SoundStore SoundStore
 
-<div class="container-fluid">
+<MudGrid>
+    <MudItem xs="6">
+        <MudCard>
+            <MudCardContent>
+                <EditForm Model="@_uploadImageModel" OnValidSubmit="ImageUploadSubmit">
+                    <InputFile id="fileInput" OnChange="OnInputFileChange" hidden />
+
+					<MudButton HtmlTag="label"
+							   Variant="Variant.Filled"
+							   Color="Color.Primary"
+							   StartIcon="@Icons.Filled.FileUpload"
+							   for="fileInput">
+						Upload File
+					</MudButton>
+				</EditForm>
+			</MudCardContent>
+		</MudCard>
+    </MudItem>
+    <MudItem xs="6">
+
+	</MudItem>
+</MudGrid>
+
+@*<div class="container-fluid">
   <div class="row">
     <div class="col-4">
       <EditForm Model="@_uploadImageModel" OnValidSubmit="ImageUploadSubmit" class="form">
@@ -34,7 +57,7 @@
 		</div>
         <div class="mb-3">
           <label for="sound" class="form-label">Sound:</label>
-		  @*<InputText id="sound" class="form-control" @bind-Value="_uploadImageModel.Sound" />*@
+		  <InputText id="sound" class="form-control" @bind-Value="_uploadImageModel.Sound" />
 		   <InputSelect id="sound" class="form-control form-select" @bind-Value="_uploadImageModel.Sound">
              <option value="" selected>(None)</option>
              @foreach (var sound in Sounds)
@@ -56,7 +79,7 @@
     </div>
   </div>
 </div>
-
+*@
 @code {
   const long MaxUploadSize = 1024 * 1024 * 4;
 

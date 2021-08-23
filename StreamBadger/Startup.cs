@@ -9,6 +9,7 @@ using Microsoft.Maui.Controls.Compatibility;
 using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Controls.Xaml;
 using Microsoft.Maui.LifecycleEvents;
+using MudBlazor.Services;
 using StreamBadger.Shared;
 using StreamBadger.Shared.Clients;
 
@@ -53,6 +54,8 @@ namespace StreamBadger
         private void ConfigureServices(IServiceCollection services)
         {
             services.AddBlazorWebView();
+
+            services.AddMudServices();
 
             services.AddSingleton<ImageStore>();
             services.AddSingleton<SoundStore>();

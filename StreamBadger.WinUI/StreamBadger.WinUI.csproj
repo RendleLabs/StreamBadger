@@ -45,6 +45,7 @@
 		<PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.8.2" />
 		<PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.8.2" />
 		<PackageReference Include="Microsoft.ProjectReunion.InteractiveExperiences" Version="0.8.2" NoWarn="NU1701" />
+		<PackageReference Include="MudBlazor" Version="5.1.1" />
 	</ItemGroup>
 
 	<ItemGroup>
